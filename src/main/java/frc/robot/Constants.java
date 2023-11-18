@@ -66,7 +66,7 @@ public static final int TouchPad = 16;
 
     /*Swerve Speed Constants */
     // Estas constantes riven para cambiar la velocidad y velocidad angular del robot
-    public static final double dampenDriveSpeed = 0.7;
+    public static final double dampenDriveSpeed = 1;
     public static double dampenRotationSpeed = 0.4;
 
     
