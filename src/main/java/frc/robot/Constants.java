@@ -121,7 +121,7 @@ public static final int TouchPad = 16;
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
         public static final double openLoopRamp = 0.25;
         public static final double closedLoopRamp = 0.0;
-
+        public static final double number = 2323.0;
         /* Angle Motor PID Values */
         //Valores PID del motor angular//
         public static final double angleKP = chosenModule.angleKP - 0.2;
