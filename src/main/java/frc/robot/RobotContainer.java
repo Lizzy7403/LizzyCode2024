@@ -45,8 +45,6 @@ public class RobotContainer{
     // Declaracion de subsistemas//
 
     //private final ScrewElevator m_screwElevator = new ScrewElevator();
-    private final Gripper m_Gripper = new Gripper();
-    private final Arm m_arm = new Arm();
     private final Tele m_tele = new Tele();
 
     /* Controllers */

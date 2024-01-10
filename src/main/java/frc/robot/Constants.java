@@ -29,6 +29,14 @@ public final class Constants {
         public static final double kMaxAbsOutput = .6;
     }
 
+     public static final class ShooterConstants {
+        public static final int MOTOR_1_ID = 1;
+        public static final int MOTOR_2_ID = 2;
+        public static final double kMaxAbsOutput = .6;
+    }
+
+
+
     public static final double stickDeadband = 0.1;
 
     /*Autonomous Constants */
