@@ -59,7 +59,7 @@ public class RobotContainer{
     private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ButtonOption);
     private final JoystickButton robotCentric = new JoystickButton(driver, Constants.TouchPad);
 
-    private final JoystickButton changeRotVelo = new JoystickButton(driver, Constants.ButtonR3);
+    //private final JoystickButton changeRotVelo = new JoystickButton(driver, Constants.ButtonR3);
 
     /* Intake Buttons */
     // Botones del ingreso//
