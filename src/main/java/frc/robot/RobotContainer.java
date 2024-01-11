@@ -69,7 +69,8 @@ public class RobotContainer{
 
     /* Shooter Buttons */
     // Botones del cañon//
-    private final JoystickButton shooterButton = new JoystickButton(driver, Constants.ButtonSquare);
+    private final JoystickButton shooterButtonHigh = new JoystickButton(driver, Constants.ButtonR1);
+    private final JoystickButton shooterButtonLow = new JoystickButton(driver, Constants.ButtonL1);
     private final JoystickButton stopShooterButton = new JoystickButton(driver, Constants.ButtonTriangle);
 
     /* Subsystems */
@@ -118,7 +119,8 @@ public class RobotContainer{
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         intakeSpinButton.onTrue(new SpinIntakeCommand(m_intake, .5));
         intakeRotateButton.onTrue(new ToggleIntakeCommand(m_intake, 100, 0, this::isIntakeExtended, this::toggleIntakeExtension));
-        shooterButton.onTrue(new ShootCommand(m_shooter, .6));
+        shooterButtonHigh.onTrue(new ShootCommand(m_shooter, .6));
+        shooterButtonLow.onTrue(new ShootCommand(m_shooter, .4));
         stopShooterButton.onTrue(new StopShootingCommand(m_shooter));
 
 
