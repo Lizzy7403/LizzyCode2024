@@ -13,8 +13,8 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants {
 
     public static final class IntakeConstants {
-        public static final int ROTATE_MOTOR_ID = 1;
-        public static final int SPIN_MOTOR_ID = 2;
+        public static final int ROTATE_MOTOR_ID = 14;
+        public static final int SPIN_MOTOR_ID = 16;
 
         public static final double kP = 0.1;
         public static final double kI = 0.0;
@@ -23,10 +23,8 @@ public final class Constants {
         public static final double kFF = 0.0;
 
         public static final double kRotationSetpoint = 135;
-        public static final int EncoderChannelA = 0;
-        public static final int EncoderChannelB = 1;
 
-        public static final double kMaxAbsOutput = .6;
+        public static final double kMaxAbsOutput = .1;
     }
 
      public static final class ShooterConstants {
@@ -53,8 +51,6 @@ public final class Constants {
 
    /*ScrewElevator Constants */
        
-   public static final int elevator1Id = 14;
-   public static final int elevator2Id = 16;
    public static final double speedElevatorMotor = 0.1;
    public static final int telescopicId = 13;
    public static final double speedTelescopicMotor = 0.1;

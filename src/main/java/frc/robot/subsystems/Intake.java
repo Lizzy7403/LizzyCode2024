@@ -20,6 +20,10 @@ import com.revrobotics.CANSparkMax.ControlType;
 // This enum provides constants to specify the type of motor (brushed or brushless)
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // Importing the SubsystemBase class from the WPILib library
 // This class provides the base for creating subsystems, which are major parts of the robot
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -46,6 +50,10 @@ public class Intake extends SubsystemBase {
   // The encoder for the rotation motor
   // This is used to get the position and velocity of the intake
   private final RelativeEncoder m_rotateEncoder;
+
+
+  private GenericEntry encoderPositionEntry;
+  private GenericEntry encoderVelocityEntry;
 
   // The constructor for the Intake class
   // This is called when an Intake object is created
@@ -75,6 +83,14 @@ public class Intake extends SubsystemBase {
 
     // Setting the output range for the PID controller
     m_pidRotateController.setOutputRange(-1. * Constants.IntakeConstants.kMaxAbsOutput, Constants.IntakeConstants.kMaxAbsOutput);
+
+    encoderPositionEntry = Shuffleboard.getTab("ExampleTab")
+            .add("Encoder Position", 0)
+            .getEntry();
+
+        encoderVelocityEntry = Shuffleboard.getTab("ExampleTab")
+            .add("Encoder Velocity", 0)
+            .getEntry();
   }
 
   // Method to rotate the intake to a specific position
@@ -111,5 +127,7 @@ public class Intake extends SubsystemBase {
   // Currently, it does not perform any operations
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("  NEWArmEncoderPOS", m_rotateEncoder.getPosition());
+    SmartDashboard.putNumber("NEWArmEncoderVEL", m_rotateEncoder.getVelocity());
   }
 }
