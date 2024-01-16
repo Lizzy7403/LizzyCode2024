@@ -143,10 +143,10 @@ public class RobotContainer{
         //** SHOOTER BUTTONS */
         shooterButtonHigh.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBHigh));
         shooterButtonLow.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBLow));
-        
 
-
-        //TODO UNCOMMENT
+        //** LIFT BUTTONS */
+        liftUpControlled.whileTrue(new LiftUpCommand());
+        liftDownControlled.whileTrue(new LiftDownCommand());
 
     }
 

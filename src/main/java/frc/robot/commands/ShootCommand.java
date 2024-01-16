@@ -20,6 +20,7 @@ public class ShootCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        shooter.stopShooter();
         return true; // This command completes immediately after setting the speed
     }
 }

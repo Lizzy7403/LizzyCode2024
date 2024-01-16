@@ -35,6 +35,8 @@ public class Shooter extends SubsystemBase {
 
     // Initializing the second shooter motor with its ID and specifying that it's a brushless motor
     shooterMotor2 = new CANSparkMax(Constants.ShooterConstants.MOTOR_2_ID, MotorType.kBrushless);
+
+    shooterMotor2.follow(shooterMotor1);
   }
 
   // Method to set the speed of the shooter motors
@@ -46,18 +48,14 @@ public class Shooter extends SubsystemBase {
       speed = Math.signum(speed) * Constants.ShooterConstants.kMaxAbsOutput;
     }
 
-    // Set the speed of the first shooter motor
+    // Set the speed of the first shooter motor and second shooter motor to the specified speed
     shooterMotor1.set(speed);
-
-    // Set the speed of the second shooter motor
-    shooterMotor2.set(speed);
   }
 
   // Method to stop the shooter motors
   // This is done by setting the speed of both motors to 0
   public void stopShooter() {
     shooterMotor1.set(0);
-    shooterMotor2.set(0);
   }
 
   // This method will be called once per scheduler run
