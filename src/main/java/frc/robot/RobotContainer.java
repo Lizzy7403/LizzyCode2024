@@ -64,15 +64,30 @@ public class RobotContainer{
 
     /* Intake Buttons */
     // Botones del ingreso//
-    private final JoystickButton intakeSpinButton = new JoystickButton(driver, Constants.ButtonX);
+
+    //spins the intake such that it intakes hoops
+    private final JoystickButton intakeSpinButton = new JoystickButton(driver, Constants.ButtonSquare);
+
+    //spins the arm of the intake to extend or retract arm
     private final JoystickButton intakeRotateButton = new JoystickButton(driver, Constants.ButtonCircle);
 
+    //spins the arm of the intake to extend at a controlled speed
+    private final JoystickButton intakeExtendControlled = new JoystickButton(driver, Constants.ButtonR2);
 
-    /* Shooter Buttons */
-    // Botones del cañon//
-    private final JoystickButton shooterButtonHigh = new JoystickButton(driver, Constants.ButtonR1);
-    private final JoystickButton shooterButtonLow = new JoystickButton(driver, Constants.ButtonL1);
-    private final JoystickButton stopShooterButton = new JoystickButton(driver, Constants.ButtonTriangle);
+    //spins the arm of the intake to retract at a controlled speed
+    private final JoystickButton intakeRetractControlled = new JoystickButton(driver, Constants.ButtonL2);
+
+    //shoots the hoops at a high speed,to reach the speaker
+    private final JoystickButton shooterButtonHigh = new JoystickButton(driver, Constants.ButtonCircle);
+
+    //shoots the hoops at a low speed, to reach the amp
+    private final JoystickButton shooterButtonLow = new JoystickButton(driver, Constants.ButtonX);
+
+    //lifts the lift to the top
+    private final JoystickButton liftUpControlled = new JoystickButton(driver, Constants.ButtonR1);
+
+    //lowers the lift to the bottom
+    private final JoystickButton liftDownControlled = new JoystickButton(driver, Constants.ButtonL1);
 
     /* Subsystems */
     // Subsistemas//
@@ -118,11 +133,17 @@ public class RobotContainer{
         /* Driver Buttons */
         // Botones de conduccion//
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        intakeSpinButton.onTrue(new SpinIntakeCommand(m_intake, .5));
-        intakeRotateButton.onTrue(new ToggleIntakeCommand(m_intake, 100, 0, this::isIntakeExtended, this::toggleIntakeExtension));
-        shooterButtonHigh.onTrue(new ShootCommand(m_shooter, .6));
-        shooterButtonLow.onTrue(new ShootCommand(m_shooter, .4));
-        stopShooterButton.onTrue(new StopShootingCommand(m_shooter));
+
+        //** INTAKE BUTTONS */
+        intakeSpinButton.whileTrue(new SpinIntakeCommand(m_intake, Constants.IntakeConstants.kMaxAbsOutputRB));
+        intakeRotateButton.onTrue(new ToggleIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh, Constants.IntakeConstants.kRotationSetpointLow, this::isIntakeExtended, this::toggleIntakeExtension));
+        intakeExtendControlled.whileTrue(new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh));
+        intakeRetractControlled.whileTrue(new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointLow));
+
+        //** SHOOTER BUTTONS */
+        shooterButtonHigh.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBHigh));
+        shooterButtonLow.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBLow));
+        
 
 
         //TODO UNCOMMENT

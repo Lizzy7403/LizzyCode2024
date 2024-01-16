@@ -22,15 +22,25 @@ public final class Constants {
         public static final double kIz = 0.0;
         public static final double kFF = 0.0;
 
-        public static final double kRotationSetpoint = 135;
+        public static final double kRotationSetpointHigh = 135;
+        public static final double kRotationSetpointLow = 0;
 
+        //max output at intake class
         public static final double kMaxAbsOutput = .1;
+
+        //max output at robot container class
+        public static final double kMaxAbsOutputRB = .1;
     }
 
      public static final class ShooterConstants {
         public static final int MOTOR_1_ID = 1;
         public static final int MOTOR_2_ID = 2;
-        public static final double kMaxAbsOutput = .6;
+        //max output at shooter class
+        public static final double kMaxAbsOutput = .2;
+        //max output at robot container class for high shot
+        public static final double kMaxAbsOutputRBHigh = .3;
+        //max output at robot container class for low shot
+        public static final double kMaxAbsOutputRBLow = .15;
     }
 
 
