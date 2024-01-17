@@ -21,6 +21,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,9 +54,12 @@ public class Intake extends SubsystemBase {
 
   private GenericEntry encoderPositionEntry;
   private GenericEntry encoderVelocityEntry;
+  private GenericEntry intakeLimitEntry;
 
-  // The constructor for the Intake class
-  // This is called when an Intake object is created
+  private final DigitalInput limitSwitch = new DigitalInput(4);
+
+  // The constructor for the Intake class 
+    // This is called when an Intake object is created
   public Intake() {
 
     // Initializing the rotation motor with its ID and specifying that it's a brushless motor
@@ -63,6 +67,7 @@ public class Intake extends SubsystemBase {
 
     // Initializing the roller motor with its ID and specifying that it's a brushless motor
     m_intakeMotorRoller = new CANSparkMax(Constants.IntakeConstants.SPIN_MOTOR_ID ,MotorType.kBrushless);
+    m_intakeMotorRoller.setClosedLoopRampRate(1);
 
     // Getting the encoder from the rotation motor
     m_rotateEncoder = m_intakeMotorRotate.getEncoder();
@@ -98,6 +103,10 @@ public class Intake extends SubsystemBase {
     m_pidRotateController.setReference(setpoint, ControlType.kPosition);
   }
 
+  public DigitalInput getLimitSwitch(){
+    return limitSwitch;
+  }
+
   // Method to stop rotating the intake
   // This is done by setting the desired position of the intake to 0
   public void stopRotateIntake() {
@@ -127,7 +136,8 @@ public class Intake extends SubsystemBase {
   // Currently, it does not perform any operations
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Intake Encoder", m_rotateEncoder.getPosition());
-    SmartDashboard.putNumber("NEWArmEncoderVEL", m_rotateEncoder.getVelocity());
+    SmartDashboard.putNumber("Intake Encoder position", m_rotateEncoder.getPosition());
+    SmartDashboard.putNumber("Intake Encoder velocity", m_rotateEncoder.getVelocity());
+    SmartDashboard.putBoolean("Intake limitswitch", limitSwitch.get());
   }
 }

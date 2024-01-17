@@ -27,6 +27,8 @@ public class ToggleIntakeCommand extends CommandBase {
     // A block of code to run that toggles the extension of the intake
     private final Runnable toggleIntakeExtension;
 
+    private final boolean isExtendedAsBoolean;
+
     // The constructor for the ToggleIntakeCommand class
     // This is called when a ToggleIntakeCommand object is created
     // The parameters are the subsystem, the setpoints, the supplier, and the block of code that the command will operate on
@@ -36,10 +38,11 @@ public class ToggleIntakeCommand extends CommandBase {
         this.setpointRetracted = setpointRetracted;
         this.isIntakeExtended = isIntakeExtended;
         this.toggleIntakeExtension = toggleIntakeExtension;
+        this.isExtendedAsBoolean = isIntakeExtended.getAsBoolean();
 
         // This command requires the intake subsystem
         // This means that no other command that requires the intake subsystem can run at the same time as this command
-        addRequirements(this.intake);
+        //addRequirements(this.intake);
     }
 
     // The initialize method is called once when the command is started
