@@ -41,6 +41,7 @@ public class RobotContainer{
     //private final ScrewElevator m_screwElevator = new ScrewElevator();
     private final Intake m_intake = new Intake();
     private final Shooter m_shooter = new Shooter();
+    private final Lift m_lift = new Lift();
     // Controller
     private final Tele m_tele = new Tele();
 

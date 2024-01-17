@@ -31,7 +31,7 @@ public final class Constants {
         //max output at robot container class
         public static final double kMaxAbsOutputRBExtended = 0.1;
         public static final double kMaxAbsOutputRBRetracted = 0.5;
-        public static double collectSpeed=0.3;
+        public static double collectSpeed=0.1;
     }
 
      public static final class ShooterConstants {
