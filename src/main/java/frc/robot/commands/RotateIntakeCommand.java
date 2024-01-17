@@ -57,7 +57,7 @@ public class RotateIntakeCommand extends CommandBase {
     // If the intake's position is within 5 units of the setpoint, the command is marked as finished
     @Override
     public void execute() {
-        if (Math.abs(intake.getRotateEncoderPosition() - setpoint) < 5) {
+        if (Math.abs(intake.getRotateEncoderPosition() - setpoint) < 5 || (intake.getLimitSwich().get() && isExtended)) {
             isFinished = true;
         }
     }
