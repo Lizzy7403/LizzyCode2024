@@ -21,12 +21,24 @@ public class RotateIntakeCommand extends CommandBase {
     // A boolean flag to indicate when the command is finished
     private boolean isFinished = false;
 
+    private boolean isExtended = false;
+
     // The constructor for the RotateIntakeCommand class
     // This is called when a RotateIntakeCommand object is created
     // The Intake object and the setpoint passed as parameters are the subsystem and the desired position that the command will operate on
     public RotateIntakeCommand(Intake intake, double setpoint) {
         this.intake = intake;
         this.setpoint = setpoint;
+
+        // This command requires the intake subsystem
+        // This means that no other command that requires the intake subsystem can run at the same time as this command
+        addRequirements(this.intake);
+    }
+
+    public RotateIntakeCommand(Intake intake, double setpoint, boolean isExtended) {
+        this.intake = intake;
+        this.setpoint = setpoint;
+        this.isExtended = isExtended;
 
         // This command requires the intake subsystem
         // This means that no other command that requires the intake subsystem can run at the same time as this command
@@ -54,6 +66,9 @@ public class RotateIntakeCommand extends CommandBase {
     // For this command, if the command was interrupted, it stops the intake from rotating
     @Override
     public void end(boolean interrupted) {
+        if(isExtended){
+            intake.resetRotateEncoder();
+        }
         if (interrupted) {
             intake.stopRotateIntake(); // Optionally stop the rotation if the command is interrupted
         }

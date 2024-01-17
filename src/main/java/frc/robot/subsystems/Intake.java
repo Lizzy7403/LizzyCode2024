@@ -102,6 +102,7 @@ public class Intake extends SubsystemBase {
   // This is done by setting the desired position of the intake to 0
   public void stopRotateIntake() {
     m_pidRotateController.setReference(0, ControlType.kPosition);
+
   }
 
   // Method to spin the intake at a specific speed
