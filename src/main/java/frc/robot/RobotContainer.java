@@ -1,16 +1,10 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
@@ -38,16 +32,14 @@ import frc.robot.subsystems.*;
 
 //para informacion sobre el commandgroup link:https://docs.wpilib.org/en/stable/docs/software/commandbased/command-compositions.html
 public class RobotContainer{
-
-    
-
     /* Subsystems declaration */
     
     // Declaracion de subsistemas//
 
     //private final ScrewElevator m_screwElevator = new ScrewElevator();
-    private final Gripper m_Gripper = new Gripper();
-    private final Arm m_arm = new Arm();
+    private final Intake m_intake = new Intake();
+    private final Shooter m_shooter = new Shooter();
+    // Controller
     private final Tele m_tele = new Tele();
 
     /* Controllers */
@@ -60,28 +52,42 @@ public class RobotContainer{
     private final int strafeAxis = 0; 
     private final int rotationAxis = 2;
 
+    boolean isIntakeExtended = false;
+
+
     /* Driver Buttons */
     // Botones del controlador//
-    private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ButtonCircle);
+    private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ButtonOption);
     private final JoystickButton robotCentric = new JoystickButton(driver, Constants.TouchPad);
 
-    private final JoystickButton changeRotVelo = new JoystickButton(driver, Constants.ButtonR3);
+    //private final JoystickButton changeRotVelo = new JoystickButton(driver, Constants.ButtonR3);
 
-    /* Arm Buttons */
-    // Botones del brazo//
-    private final JoystickButton liftToSecond = new JoystickButton(driver, Constants.ButtonSquare);
-    private final JoystickButton liftToThird = new JoystickButton(driver, Constants.ButtonTriangle);
-    private final JoystickButton zero = new JoystickButton(driver, Constants.ButtonX);
-    private final JoystickButton up = new JoystickButton(driver, Constants.ButtonR2);
-    private final JoystickButton down = new JoystickButton(driver, Constants.ButtonL2);
-    private final JoystickButton retractArm = new JoystickButton(driver, Constants.ButtonShare);
-    private final JoystickButton strechArm = new JoystickButton(driver, Constants.ButtonOption);
-    //private final JoystickButton lower = new JoystickButton(driver, Constants.ButtonX);
+    /* Intake Buttons */
+    // Botones del ingreso//
 
-    /* Gripper Buttons */
-    // Botones del Gripper//
-    private final JoystickButton closeGrip = new JoystickButton(driver, Constants.ButtonL1);
-    private final JoystickButton openGrip = new JoystickButton(driver, Constants.ButtonR1);
+    //spins the intake such that it intakes hoops
+    private final JoystickButton intakeSpinButton = new JoystickButton(driver, Constants.ButtonSquare);
+
+    //spins the arm of the intake to extend or retract arm
+    private final JoystickButton intakeRotateButton = new JoystickButton(driver, Constants.ButtonTriangle);
+
+    //spins the arm of the intake to extend at a controlled speed
+    private final JoystickButton intakeExtendControlled = new JoystickButton(driver, Constants.ButtonR2);
+
+    //spins the arm of the intake to retract at a controlled speed
+    private final JoystickButton intakeRetractControlled = new JoystickButton(driver, Constants.ButtonL2);
+
+    //shoots the hoops at a high speed,to reach the speaker
+    private final JoystickButton shooterButtonHigh = new JoystickButton(driver, Constants.ButtonCircle);
+
+    //shoots the hoops at a low speed, to reach the amp
+    private final JoystickButton shooterButtonLow = new JoystickButton(driver, Constants.ButtonX);
+
+    //lifts the lift to the top
+    private final JoystickButton liftUpControlled = new JoystickButton(driver, Constants.ButtonR1);
+
+    //lowers the lift to the bottom
+    private final JoystickButton liftDownControlled = new JoystickButton(driver, Constants.ButtonL1);
 
     /* Subsystems */
     // Subsistemas//
@@ -92,6 +98,14 @@ public class RobotContainer{
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     // El contenedor del robot. Contiene subsistemas, OI dispositivos, y comandos //
+
+    public boolean isIntakeExtended() {
+        return isIntakeExtended;
+    }
+
+    public void toggleIntakeExtension() {
+        isIntakeExtended = !isIntakeExtended;
+    }
     
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
@@ -105,6 +119,7 @@ public class RobotContainer{
         // Configure the button bindings
         // Configura el boton bindings
         configureButtonBindings();
+        m_intake.resetRotateEncoder();
     }
 
     /**
@@ -119,35 +134,20 @@ public class RobotContainer{
         /* Driver Buttons */
         // Botones de conduccion//
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        
-        zero.onTrue(new ArmToLowPosition(10, m_arm));
-        liftToSecond.onTrue(new ArmToPosition(150, m_arm));
-        liftToThird.onTrue(new ArmToPosition(180, m_arm));
-        //zero.onTrue(Commands.parallel(new ArmToPosition(0, m_screwElevator), new TeleToPosition(0, m_screwElevator)));
-        //lower.onTrue(new ArmToZero(m_arm));
-        strechArm.whileTrue(new teleManualDown(m_tele));
-        retractArm.whileTrue(new teleManualUp(m_tele));
 
-        closeGrip.onTrue(new closeGripper(m_Gripper));
-        openGrip.onTrue(new openGripper(m_Gripper));
+        //** INTAKE BUTTONS */
+        intakeSpinButton.whileTrue(new SpinIntakeCommand(m_intake, Constants.IntakeConstants.kMaxAbsOutputRB));
+        intakeRotateButton.onTrue(new ToggleIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh, Constants.IntakeConstants.kRotationSetpointLow, this::isIntakeExtended, this::toggleIntakeExtension));
+        intakeExtendControlled.whileTrue(new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh));
+        intakeRetractControlled.whileTrue(new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointLow));
 
-        /* 
-        up.whileTrue(new ArmToXPosition(1000, 
-        m_screwElevator,
-        () -> pS4Controller.getR2Axis()));
-        down.whileTrue(new ArmToXPosition(-1000, 
-        m_screwElevator,
-        () -> pS4Controller.getL2Axis()));
-        */
+        //** SHOOTER BUTTONS */
+        shooterButtonHigh.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBHigh));
+        shooterButtonLow.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBLow));
 
-        up.whileTrue(new elevatorManualUp(m_arm));
-        down.whileTrue(new elevatorManualDown(m_arm));
-
-
-        
-        
-      
-        //TODO UNCOMMENT
+        //** LIFT BUTTONS */
+        liftUpControlled.whileTrue(new LiftUpCommand());
+        liftDownControlled.whileTrue(new LiftDownCommand());
 
     }
 
@@ -165,23 +165,23 @@ public class RobotContainer{
     public Command getAutonomousRight() {
         // An ExampleCommand will run in autonomous
         // Un ejemplo en comando se ejecutara en autonomo
-        return new AutoRight(s_Swerve, m_arm, m_tele,m_Gripper);
+        return new AutoRight(s_Swerve, m_tele);
     }
 
     public Command getAutonomousLeft() {
         // An ExampleCommand will run in autonomous
         // Un ejemplo en comando se ejecutara en autonomo
-        return new AutoLeft(s_Swerve, m_arm, m_tele,m_Gripper);
+        return new AutoLeft(s_Swerve, m_tele);
     }
 
     public Command getAutonomousMiddle() {
         // An ExampleCommand will run in autonomous
         // Un ejemplo en comando se ejecutara en autonomo
-        return new AutoMiddle(s_Swerve, m_arm, m_tele,m_Gripper);
+        return new AutoMiddle(s_Swerve,m_tele);
     }
     public Command getAutonomousExp(){
 
-        return new AutoExp(s_Swerve, m_arm, m_tele, m_Gripper);
+        return new AutoExp(s_Swerve,m_tele);
     }
 
 

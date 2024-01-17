@@ -1,9 +1,7 @@
 package frc.robot.autos;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
 import frc.robot.commands.*;
-import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Tele;
 
@@ -17,14 +15,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoLeft extends SequentialCommandGroup {
-    public AutoLeft(Swerve s_Swerve, Arm m_arm, Tele m_tele, Gripper m_gripper){
+    public AutoLeft(Swerve s_Swerve, Tele m_tele){
         TrajectoryConfig config =
             new TrajectoryConfig(
                     Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -60,11 +55,11 @@ public class AutoLeft extends SequentialCommandGroup {
 
 
         addCommands(
-           new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
-            Commands.parallel(new ArmToPosition(Constants.autonomousArmToPositionValueExp, m_arm).withTimeout(Constants.autonomousArmToPositionTime) , new WaitCommand(Constants.autonomousUpDelayTimeExp).andThen(new teleManualUp(m_tele).withTimeout(Constants.autonomousTeleManualTimeExp))),
-            new openGripper(m_gripper).andThen(new WaitCommand(0.5)),
-            Commands.parallel(new WaitCommand(Constants.autonomousDownDelayTime).andThen(new ArmToZero(m_arm)), new teleManualDown(m_tele).withTimeout(Constants.autonomousTeleManualTimeExp+.4)),
-            swerveControllerCommand
+          // new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+          //  Commands.parallel(new ArmToPosition(Constants.autonomousArmToPositionValueExp, m_arm).withTimeout(Constants.autonomousArmToPositionTime) , new WaitCommand(Constants.autonomousUpDelayTimeExp).andThen(new teleManualUp(m_tele).withTimeout(Constants.autonomousTeleManualTimeExp))),
+          //  new openGripper(m_gripper).andThen(new WaitCommand(0.5)),
+          //  Commands.parallel(new WaitCommand(Constants.autonomousDownDelayTime).andThen(new ArmToZero(m_arm)), new teleManualDown(m_tele).withTimeout(Constants.autonomousTeleManualTimeExp+.4)),
+          //  swerveControllerCommand
         );
 
         /** 

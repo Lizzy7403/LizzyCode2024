@@ -7,8 +7,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -17,17 +15,30 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+//PRIX Imports
+import com.ctre.phoenix.sensors.PigeonIMU;
+
+
 public class Swerve extends SubsystemBase {
+    
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     //public ADIS16470_IMU gyro;
-    public ADXRS450_Gyro gyro;
+    //public ADXRS450_Gyro gyro;
+    public PigeonIMU gyro;
+
+    //comment
+
+    /* Note: Any example colors should be calibrated as the user needs, these
+    are here as a basic example.*/
+
 
     public Swerve() {
 
         // Calibrar y poner en cero el gyroscopio
-        gyro = new ADXRS450_Gyro();
-        gyro.calibrate();
+       //  gyro = new ADXRS450_Gyro();
+       // gyro.calibrate();
+       gyro = new PigeonIMU(Constants.Swerve.pigeonID);
         zeroGyro();
 
         
@@ -107,13 +118,13 @@ public class Swerve extends SubsystemBase {
 
     // Pone el valor del gyroscopio en cero
     public void zeroGyro() {
-        gyro.reset();
+        gyro.setYaw(0);
     }
 
     // Devuelve en un objeto de Rotation2d el valor de yaw del gyroscopio
     public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getAngle())
-                : Rotation2d.fromDegrees(gyro.getAngle());
+        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw())
+                : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
     // Pone en "cero" todos los modulos
@@ -130,7 +141,7 @@ public class Swerve extends SubsystemBase {
     {
         swerveOdometry.update(getYaw(), getModulePositions());
 
-        SmartDashboard.putNumber("Gyro", gyro.getAngle());
+        SmartDashboard.putNumber("Gyro", gyro.getYaw());
 
         for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

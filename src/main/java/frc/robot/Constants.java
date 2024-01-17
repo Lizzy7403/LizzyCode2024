@@ -11,6 +11,40 @@ import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
 public final class Constants {
+
+    public static final class IntakeConstants {
+        public static final int ROTATE_MOTOR_ID = 14;
+        public static final int SPIN_MOTOR_ID = 16;
+
+        public static final double kP = 0.01;
+        public static final double kI = 0.0000003;
+        public static final double kD = 0.000002;
+        public static final double kIz = 30.0;
+        public static final double kFF = 0.0;
+
+        public static final double kRotationSetpointHigh = 135;
+        public static final double kRotationSetpointLow = 0;
+
+        //max output at intake class
+        public static final double kMaxAbsOutput = .5;
+
+        //max output at robot container class
+        public static final double kMaxAbsOutputRB = .5;
+    }
+
+     public static final class ShooterConstants {
+        public static final int MOTOR_1_ID = 18;
+        public static final int MOTOR_2_ID = 19;
+        //max output at shooter class
+        public static final double kMaxAbsOutput = .2;
+        //max output at robot container class for high shot
+        public static final double kMaxAbsOutputRBHigh = .3;
+        //max output at robot container class for low shot
+        public static final double kMaxAbsOutputRBLow = .15;
+    }
+
+
+
     public static final double stickDeadband = 0.1;
 
     /*Autonomous Constants */
@@ -27,8 +61,6 @@ public final class Constants {
 
    /*ScrewElevator Constants */
        
-   public static final int elevator1Id = 14;
-   public static final int elevator2Id = 16;
    public static final double speedElevatorMotor = 0.1;
    public static final int telescopicId = 13;
    public static final double speedTelescopicMotor = 0.1;
@@ -73,7 +105,7 @@ public static final int TouchPad = 16;
 
 
     public static final class Swerve {
-        public static final int pigeonID = 1;
+        public static final int pigeonID = 16;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot

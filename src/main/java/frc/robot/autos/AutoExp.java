@@ -1,9 +1,6 @@
 package frc.robot.autos;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
-import frc.robot.commands.*;
-import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Tele;
 
@@ -17,14 +14,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoExp extends SequentialCommandGroup {
-    public AutoExp(Swerve s_Swerve, Arm m_arm, Tele m_tele, Gripper m_gripper){
+    public AutoExp(Swerve s_Swerve, Tele m_tele){
         TrajectoryConfig config =
             new TrajectoryConfig(
                     Constants.AutoConstants.kMaxSpeedMetersPerSecond,
