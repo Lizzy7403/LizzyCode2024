@@ -50,7 +50,7 @@ public class ToggleIntakeCommand extends CommandBase {
     @Override
     public void initialize() {
         if (isIntakeExtended.getAsBoolean()) {
-            new RotateIntakeCommand(intake, setpointRetracted).schedule();
+            new RotateIntakeCommand(intake, setpointRetracted, true).schedule();
         } else {
             new RotateIntakeCommand(intake, setpointExtended).schedule();
         }

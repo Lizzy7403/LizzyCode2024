@@ -21,6 +21,7 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // Importing the SubsystemBase class from the WPILib library
@@ -50,9 +51,11 @@ public class Intake extends SubsystemBase {
   // This is used to get the position and velocity of the intake
   private final RelativeEncoder m_rotateEncoder;
 
-
   private GenericEntry encoderPositionEntry;
   private GenericEntry encoderVelocityEntry;
+
+
+  DigitalInput limitSwitch = new DigitalInput(1);
 
   // The constructor for the Intake class
   // This is called when an Intake object is created
@@ -92,6 +95,11 @@ public class Intake extends SubsystemBase {
             .getEntry();
   }
 
+
+  public DigitalInput getLimitSwich() {
+    return limitSwitch;
+  }
+
   // Method to rotate the intake to a specific position
   // The setpoint parameter is the desired position of the intake
   public void rotateIntake(double setpoint) {
@@ -102,6 +110,7 @@ public class Intake extends SubsystemBase {
   // This is done by setting the desired position of the intake to 0
   public void stopRotateIntake() {
     m_pidRotateController.setReference(0, ControlType.kPosition);
+
   }
 
   // Method to spin the intake at a specific speed
