@@ -54,9 +54,6 @@ public class Intake extends SubsystemBase {
   private GenericEntry encoderPositionEntry;
   private GenericEntry encoderVelocityEntry;
 
-
-  DigitalInput limitSwitch = new DigitalInput(1);
-
   // The constructor for the Intake class
   // This is called when an Intake object is created
   public Intake() {
@@ -95,11 +92,6 @@ public class Intake extends SubsystemBase {
             .getEntry();
   }
 
-
-  public DigitalInput getLimitSwich() {
-    return limitSwitch;
-  }
-
   // Method to rotate the intake to a specific position
   // The setpoint parameter is the desired position of the intake
   public void rotateIntake(double setpoint) {
@@ -135,7 +127,7 @@ public class Intake extends SubsystemBase {
   // Currently, it does not perform any operations
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("  NEWArmEncoderPOS", m_rotateEncoder.getPosition());
+    SmartDashboard.putNumber("Intake Encoder", m_rotateEncoder.getPosition());
     SmartDashboard.putNumber("NEWArmEncoderVEL", m_rotateEncoder.getVelocity());
   }
 }
