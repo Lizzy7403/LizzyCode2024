@@ -42,7 +42,7 @@ public class RotateIntakeCommand extends CommandBase {
 
         // This command requires the intake subsystem
         // This means that no other command that requires the intake subsystem can run at the same time as this command
-        addRequirements(this.intake);
+        //addRequirements(this.intake);
     }
 
     // The initialize method is called once when the command is started
@@ -57,7 +57,7 @@ public class RotateIntakeCommand extends CommandBase {
     // If the intake's position is within 5 units of the setpoint, the command is marked as finished
     @Override
     public void execute() {
-        if (Math.abs(intake.getRotateEncoderPosition() - setpoint) < 5) {
+        if (Math.abs(intake.getRotateEncoderPosition() - setpoint) < 1) {
             if(isExtended){
                 intake.resetRotateEncoder();
             }

@@ -18,25 +18,27 @@ public final class Constants {
 
         public static final double kP = 0.01;
         public static final double kI = 0.0000003;
-        public static final double kD = 0.000002;
+        public static final double kD = 0.0000018;
         public static final double kIz = 30.0;
         public static final double kFF = 0.0;
 
-        public static final double kRotationSetpointHigh = 135;
+        public static final double kRotationSetpointHigh = 300;
         public static final double kRotationSetpointLow = 0;
 
         //max output at intake class
-        public static final double kMaxAbsOutput = .5;
+        public static final double kMaxAbsOutput = 0.5;
 
         //max output at robot container class
-        public static final double kMaxAbsOutputRB = .5;
+        public static final double kMaxAbsOutputRBExtended = 0.1;
+        public static final double kMaxAbsOutputRBRetracted = 0.5;
+        public static double collectSpeed=0.3;
     }
 
      public static final class ShooterConstants {
         public static final int MOTOR_1_ID = 18;
         public static final int MOTOR_2_ID = 19;
         //max output at shooter class
-        public static final double kMaxAbsOutput = .2;
+        public static final double kMaxAbsOutput = 0.3;
         //max output at robot container class for high shot
         public static final double kMaxAbsOutputRBHigh = .3;
         //max output at robot container class for low shot
@@ -90,8 +92,8 @@ public static final int ButtonL1 = 5;
 public static final int ButtonR1 = 6;
 public static final int ButtonL3 = 13;
 public static final int ButtonR3 = 14;
-public static final int ButtonShare = 10;
-public static final int ButtonOption = 9;
+public static final int ButtonShare = 9;
+public static final int ButtonOption = 10;
 public static final int PSButton = 15;
 public static final int TouchPad = 16;
 

@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
@@ -53,6 +55,8 @@ public class RobotContainer{
     private final int rotationAxis = 2;
 
     boolean isIntakeExtended = false;
+
+    boolean isIntakeExtendedSpin = false;
 
 
     /* Driver Buttons */
@@ -105,6 +109,7 @@ public class RobotContainer{
 
     public void toggleIntakeExtension() {
         isIntakeExtended = !isIntakeExtended;
+        isIntakeExtendedSpin = !isIntakeExtendedSpin;
     }
     
     public RobotContainer() {
@@ -136,13 +141,16 @@ public class RobotContainer{
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         //** INTAKE BUTTONS */
-        intakeSpinButton.whileTrue(new SpinIntakeCommand(m_intake, Constants.IntakeConstants.kMaxAbsOutputRB));
+        intakeSpinButton.whileTrue(new Collect(m_intake,Constants.IntakeConstants.collectSpeed));
+        
+        //intakeSpinButton.whileTrue(new SpinIntakeCommand(m_intake, Constants.IntakeConstants.kMaxAbsOutputRBRetracted, Constants.IntakeConstants.kMaxAbsOutputRBExtended,   isIntakeExtendedSpin));
         intakeRotateButton.onTrue(new ToggleIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh, Constants.IntakeConstants.kRotationSetpointLow, this::isIntakeExtended, this::toggleIntakeExtension));
         intakeExtendControlled.whileTrue(new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh));
         intakeRetractControlled.whileTrue(new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointLow));
 
         //** SHOOTER BUTTONS */
-        shooterButtonHigh.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBHigh));
+        shooterButtonHigh.onTrue((Commands.parallel(Commands.waitSeconds(1).asProxy().andThen(new Feed(m_intake,0.2).withTimeout(1)),new RotateIntakeCommand(m_intake, Constants.IntakeConstants.kRotationSetpointHigh))));
+        //shooterButtonHigh.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBHigh));
         shooterButtonLow.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBLow));
 
         //** LIFT BUTTONS */
