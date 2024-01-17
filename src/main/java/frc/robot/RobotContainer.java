@@ -69,7 +69,7 @@ public class RobotContainer{
     private final JoystickButton intakeSpinButton = new JoystickButton(driver, Constants.ButtonSquare);
 
     //spins the arm of the intake to extend or retract arm
-    private final JoystickButton intakeRotateButton = new JoystickButton(driver, Constants.ButtonCircle);
+    private final JoystickButton intakeRotateButton = new JoystickButton(driver, Constants.ButtonTriangle);
 
     //spins the arm of the intake to extend at a controlled speed
     private final JoystickButton intakeExtendControlled = new JoystickButton(driver, Constants.ButtonR2);
@@ -119,6 +119,7 @@ public class RobotContainer{
         // Configure the button bindings
         // Configura el boton bindings
         configureButtonBindings();
+        m_intake.resetRotateEncoder();
     }
 
     /**
