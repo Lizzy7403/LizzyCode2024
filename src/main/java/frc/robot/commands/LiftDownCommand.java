@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class LiftDownCommand extends CommandBase {
 
-    public LiftDownCommand() {
+    public LiftDownCommand(Lift lift, double speed) {
 
         //addRequirements();
     }
