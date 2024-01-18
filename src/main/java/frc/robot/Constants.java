@@ -45,6 +45,22 @@ public final class Constants {
         public static final double kMaxAbsOutputRBLow = .15;
     }
 
+    public static final class LiftConstants {
+        public static final int MOTOR_ID = 20;
+        //max output at shooter class
+        public static final double kMaxAbsOutput = 0.3;
+        //max output at robot container class for going up
+        public static final double kMaxAbsOutputRBUp = 0.3;
+        //max output at robot container class for going down
+        public static final double kMaxAbsOutputRBDown = -0.3;
+
+        public static final int peakCurrentLimit = 30; // the peak current, in amps
+
+        public static final int peakCurrentDuration = 1500; // the time at the peak current before the limit triggers, in ms
+
+        public static final int continuousCurrentLimit = 28; // the current to maintain if the peak limit is triggered
+    }
+
 
 
     public static final double stickDeadband = 0.1;

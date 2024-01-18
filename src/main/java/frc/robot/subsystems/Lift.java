@@ -3,13 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
-// Importing the CANSparkMax class from the REV Robotics library
-// This class provides methods to control the Spark MAX motor controller
-import com.revrobotics.CANSparkMax;
-
-// Importing the MotorType enum from the REV Robotics library
-// This enum provides constants to specify the type of motor (brushed or brushless)
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 // Importing the SubsystemBase class from the WPILib library
 // This class provides the base for creating subsystems, which are major parts of the robot
@@ -30,11 +23,11 @@ public class Lift extends SubsystemBase {
   // This is called when a Shooter object is created
   public Lift() {
     // Initializing the first shooter motor with its ID and specifying that it's a brushless motor
-    motor = new TalonSRX(20);
+    motor = new TalonSRX(Constants.LiftConstants.MOTOR_ID);
     TalonSRXConfiguration config = new TalonSRXConfiguration();
-    config.peakCurrentLimit = 30; // the peak current, in amps
-    config.peakCurrentDuration = 1500; // the time at the peak current before the limit triggers, in ms
-    config.continuousCurrentLimit = 30; // the current to maintain if the peak limit is triggered
+    config.peakCurrentLimit = Constants.LiftConstants.peakCurrentLimit; // the peak current, in amps
+    config.peakCurrentDuration = Constants.LiftConstants.peakCurrentDuration; // the time at the peak current before the limit triggers, in ms
+    config.continuousCurrentLimit = Constants.LiftConstants.continuousCurrentLimit; // the current to maintain if the peak limit is triggered
     motor.configAllSettings(config); // apply the config settings; this selects the quadrature encoder
   }
 
@@ -43,8 +36,8 @@ public class Lift extends SubsystemBase {
   public void setLiftToSpeed(double speed) {
     // If the absolute value of the speed is greater than the maximum allowed,
     // set the speed to the maximum in the same direction
-    if(Math.abs(speed) > Constants.ShooterConstants.kMaxAbsOutput) {
-        motor.set(TalonSRXControlMode.PercentOutput, Constants.ShooterConstants.kMaxAbsOutput);
+    if(Math.abs(speed) > Constants.LiftConstants.kMaxAbsOutput) {
+        motor.set(TalonSRXControlMode.PercentOutput, Constants.LiftConstants.kMaxAbsOutput * Math.signum(speed));
     }
 
     // Set the speed of the first shooter motor and second shooter motor to the specified speed

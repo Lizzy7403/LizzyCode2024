@@ -155,8 +155,8 @@ public class RobotContainer{
         shooterButtonLow.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBLow));
 
         //** LIFT BUTTONS */
-        liftUpControlled.whileTrue(new LiftUpCommand());
-        liftDownControlled.whileTrue(new LiftDownCommand());
+        liftUpControlled.whileTrue(new LiftCommand(m_lift, Constants.LiftConstants.kMaxAbsOutputRBUp));
+        liftDownControlled.whileTrue(new LiftCommand(m_lift , Constants.LiftConstants.kMaxAbsOutputRBDown));
 
     }
 
