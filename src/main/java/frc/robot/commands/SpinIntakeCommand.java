@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-
 // Importing the CommandBase class from the WPILib library
 // This class provides the base for creating commands, which are actions that the robot can perform
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,19 +16,16 @@ public class SpinIntakeCommand extends CommandBase {
 
     // The speed at which the intake should spin
     // This is a double value between -1.0 and 1.0
-    private final double extendedSpeed;
-
-    private final double retractedSpeed;
+    private final double speed;
 
     private final boolean isExtended;
 
     // The constructor for the SpinIntakeCommand class
     // This is called when a SpinIntakeCommand object is created
     // The Intake object and the speed passed as parameters are the subsystem and the speed that the command will operate on
-    public SpinIntakeCommand(Intake intake, double retractedSpeed, double extendedSpeed, boolean isExtended) {
+    public SpinIntakeCommand(Intake intake, double retractedSpeed, double speed, boolean isExtended) {
         this.intake = intake;
-        this.retractedSpeed = retractedSpeed;
-        this.extendedSpeed = extendedSpeed;
+        this.speed = speed;
         this.isExtended = isExtended;
 
         // This command requires the intake subsystem
@@ -47,7 +42,7 @@ public class SpinIntakeCommand extends CommandBase {
 
      
        if(isExtended){
-            intake.spinIntake(extendedSpeed);
+            intake.spinIntake(speed);
         }
     }
 
