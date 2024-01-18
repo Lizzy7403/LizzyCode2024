@@ -93,6 +93,8 @@ public class RobotContainer{
     //lowers the lift to the bottom
     private final JoystickButton liftDownControlled = new JoystickButton(driver, Constants.ButtonL1);
 
+    private final JoystickButton liftHold = new JoystickButton(driver, Constants.ButtonShare);
+
     /* Subsystems */
     // Subsistemas//
     private final Swerve s_Swerve = new Swerve();
@@ -154,8 +156,9 @@ public class RobotContainer{
         shooterButtonLow.onTrue(new ShootCommand(m_shooter, Constants.ShooterConstants.kMaxAbsOutputRBLow));
 
         //** LIFT BUTTONS */
-        liftUpControlled.whileTrue(new LiftCommand(m_lift, Constants.LiftConstants.kMaxAbsOutputRBUp));
-        liftDownControlled.whileTrue(new LiftCommand(m_lift , Constants.LiftConstants.kMaxAbsOutputRBDown));
+        liftUpControlled.whileTrue(new MoveLiftCommand(m_lift, Constants.LiftConstants.kMaxAbsOutputRBUp));
+        liftDownControlled.whileTrue(new MoveLiftCommand(m_lift , Constants.LiftConstants.kMaxAbsOutputRBDown));
+        liftHold.toggleOnTrue(new HoldLiftCommand(m_lift));
 
     }
 

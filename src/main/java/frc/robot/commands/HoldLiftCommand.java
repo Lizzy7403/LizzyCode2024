@@ -3,26 +3,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
 
-public class LiftCommand extends CommandBase {
+public class HoldLiftCommand extends CommandBase {
 
     private final Lift lift;
 
-    private final double speed;
-
-    public LiftCommand(Lift lift, double speed) {
+    public HoldLiftCommand(Lift lift) {
         this.lift = lift;
-        this.speed = speed;
+
         addRequirements(lift);    
     }
 
     @Override
     public void initialize() {
-        lift.setLiftToSpeed(speed);
+        lift.setHoldPosition();
     }
 
     @Override
     public void end(boolean interrupted) {
         lift.stopLift();
+        lift._deactivateHoldMode();
     }
 
     @Override

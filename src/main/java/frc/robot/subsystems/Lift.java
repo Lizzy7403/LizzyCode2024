@@ -52,7 +52,7 @@ public class Lift extends SubsystemBase {
 
   // Method to set the speed of the lift motors
   // The speed parameter is a double value between -1.0 and 1.0
-public void setLiftToPosition(int position) {
+public void setLiftToPosition(double position) {
     _deactivateHoldMode();
     motor.set(TalonSRXControlMode.Position, position);
 }
@@ -75,9 +75,10 @@ public void _deactivateHoldMode() {
   motor.selectProfileSlot(0, 0);
 }
 
-public void setHoldPosition(int position) {
+public void setHoldPosition() {
+  double currentPosition = motor.getSelectedSensorPosition(0);
   _activateHoldMode();
-  motor.set(TalonSRXControlMode.Position, position);
+  motor.set(TalonSRXControlMode.Position, currentPosition);
 }
 
 
