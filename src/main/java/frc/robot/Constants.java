@@ -59,6 +59,24 @@ public final class Constants {
         public static final int peakCurrentDuration = 1500; // the time at the peak current before the limit triggers, in ms
 
         public static final int continuousCurrentLimit = 28; // the current to maintain if the peak limit is triggered
+        
+        public static final double kPMoving = 0.1;
+        public static final double kIMoving = 0.0;
+        public static final double kDMoving = 0.0;
+        public static final double kFMoving = 0.0;
+
+        public static final double kPHolding = 0.1;
+        public static final double kIHolding = 0.0;
+        public static final double kDHolding = 0.0;
+        public static final double kFHolding = 0.0;
+
+        public static final int ENCODER_PORT_A = 1;
+        public static final int ENCODER_PORT_B = 2;
+
+        public static final boolean REVERSE_ENCODER = false;
+
+        public static final int TIMEOUT_MS = 30;
+        
     }
 
 
