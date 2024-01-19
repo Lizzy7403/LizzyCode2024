@@ -17,7 +17,7 @@ public class MoveLiftCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        lift.setLiftToPosition(position);
+        lift.setPosition(position);
     }
 
     @Override

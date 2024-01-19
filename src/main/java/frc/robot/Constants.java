@@ -53,29 +53,19 @@ public final class Constants {
         public static final double kMaxAbsOutputRBUp = 0.3;
         //max output at robot container class for going down
         public static final double kMaxAbsOutputRBDown = -0.3;
-
-        public static final int peakCurrentLimit = 30; // the peak current, in amps
-
-        public static final int peakCurrentDuration = 1500; // the time at the peak current before the limit triggers, in ms
-
-        public static final int continuousCurrentLimit = 28; // the current to maintain if the peak limit is triggered
         
-        public static final double kPMoving = 0.1;
-        public static final double kIMoving = 0.0;
-        public static final double kDMoving = 0.0;
-        public static final double kFMoving = 0.0;
+        public static final double kP = 0.01;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kIz = 0.0;
+        public static final double kFF = 0.0;
 
-        public static final double kPHolding = 0.1;
-        public static final double kIHolding = 0.0;
-        public static final double kDHolding = 0.0;
-        public static final double kFHolding = 0.0;
-
-        public static final int ENCODER_PORT_A = 1;
-        public static final int ENCODER_PORT_B = 2;
-
-        public static final boolean REVERSE_ENCODER = false;
-
-        public static final int TIMEOUT_MS = 30;
+        //holding PID
+        public static final double kPHold = 0.1;
+        public static final double kIHold = 0;
+        public static final double kDHold = 0;
+        public static final double kIzHold = 0.0;
+        public static final double kFFHold = 0.0;
         
     }
 

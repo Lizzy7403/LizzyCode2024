@@ -158,7 +158,7 @@ public class RobotContainer{
         //** LIFT BUTTONS */
         liftUpControlled.whileTrue(new MoveLiftCommand(m_lift, Constants.LiftConstants.kMaxAbsOutputRBUp));
         liftDownControlled.whileTrue(new MoveLiftCommand(m_lift , Constants.LiftConstants.kMaxAbsOutputRBDown));
-        liftHold.toggleOnTrue(new HoldLiftCommand(m_lift));
+        liftHold.toggleOnTrue(new HoldLiftCommand(m_lift, Constants.LiftConstants.kP, Constants.LiftConstants.kI, Constants.LiftConstants.kD, Constants.LiftConstants.kIz, Constants.LiftConstants.kFF));
 
     }
 
