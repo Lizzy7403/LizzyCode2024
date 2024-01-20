@@ -41,7 +41,6 @@ public class RobotContainer{
     private final Intake m_intake = new Intake();
     private final Shooter m_shooter = new Shooter();
     private final Lift m_lift = new Lift();
-    // Controller
     private final Tele m_tele = new Tele();
 
     /* Controllers */
@@ -95,10 +94,8 @@ public class RobotContainer{
 
     private final JoystickButton liftHold = new JoystickButton(driver, Constants.ButtonShare);
 
-    /* Subsystems */
-    // Subsistemas//
+    
     private final Swerve s_Swerve = new Swerve();
-
     // CHANGED
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -127,6 +124,7 @@ public class RobotContainer{
         // Configura el boton bindings
         configureButtonBindings();
         m_intake.resetRotateEncoder();
+        m_lift.resetRotateEncoder();
     }
 
     /**

@@ -52,7 +52,7 @@ public class ToggleIntakeCommand extends CommandBase {
         if (isIntakeExtended.getAsBoolean()) {
             new RotateIntakeCommand(intake, setpointRetracted, true).schedule();
         } else {
-            new RotateIntakeCommand(intake, setpointExtended).schedule();
+            new RotateIntakeCommand(intake, setpointExtended, false).schedule();
         }
         toggleIntakeExtension.run();
     }
